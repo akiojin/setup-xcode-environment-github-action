@@ -7490,7 +7490,7 @@ function Escape(text) {
 function MatchProvisioningProfile(text, name, type) {
     const match = text.match(new RegExp(`^.*Profile ${Escape(type)}.*sign_${Escape(name)}.*$`, 'gm'));
     if (match === null) {
-        throw new Error('Not found provisioning profile');
+        throw new Error(`Not found provisioning profile. name=${name}, type=${type}`);
     }
     return match.join('\n').split('|')[3].trim();
 }

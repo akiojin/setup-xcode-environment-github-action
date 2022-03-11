@@ -24,16 +24,6 @@ inputs:
       it will ask you for the passphrase for the Git repository.
       This is an additional layer of security: each of the files will be encrypted using openssl.
     required: true
-  api-key-base64:
-    description: >
-      Your App Store Connect API Key information
-      (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
-    required: false
-  api-key-path:
-    description: >
-      Path to your App Store Connect API Key JSON file
-      (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-    required: false
   keychain:
     description: >
       Path of the keychain to use. If omitted, the default login keychain is used.

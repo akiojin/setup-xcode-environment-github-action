@@ -1,0 +1,61 @@
+name: 'xcode-build-github-action'
+description: ''
+inputs:
+  type:
+    description: >
+      Define the profile type,
+      can be appstore, adhoc, development, enterprise, developer_id, mac_installer_distribution
+    required: true
+  app-identifier:
+    description: >
+      The bundle identifier(s) of your app (comma-separated string or array of strings)
+    required: true
+  team-id:
+    description: >
+      The ID of your Developer Portal team if you're in multiple teams
+    required: true
+  git-url:
+    description: >
+      URL to the git repo containing all the certificates
+    required: true
+  git-passphrase:
+    description: >
+      When running match for the first time on a new machine,
+      it will ask you for the passphrase for the Git repository.
+      This is an additional layer of security: each of the files will be encrypted using openssl.
+    required: true
+  api-key-base64:
+    description: >
+      Your App Store Connect API Key information
+      (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
+    required: false
+  api-key-path:
+    description: >
+      Path to your App Store Connect API Key JSON file
+      (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
+    required: false
+  keychain:
+    description: >
+      Path of the keychain to use. If omitted, the default login keychain is used.
+    required: false
+    default: ''
+  keychain-password:
+    description: >
+      Password for the keychain if specified in the keychain parameter;
+      default login keychain password if the kerchain parameter is omitted.
+    required: true
+    default: ''
+outputs:
+  provisioning-profile:
+    description: 'The file path for Provisioning Profile.'
+  provisioning-profile-uuid:
+    description: 'The UUID for Provisioning Profile.'
+  provisioning-profile-name:
+    description: 'The Name for Provisioning Profile.'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+  post: 'dist/index.js'
+branding:
+  icon: "download"
+  color: "orange"

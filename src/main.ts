@@ -18,7 +18,7 @@ function Escape(text: string)
 
 function MatchProvisioningProfile(text: string, name: string, type: string): string
 {
-	const pattern = `^.*Profile ${Escape(type)}.*sign_${Escape(name)}.*$`
+	const pattern = `^.*Profile ${Escape(type)}.*sigh_${Escape(name)}.*$`
 	const match = text.match(new RegExp(pattern,'gm'))
 
 	if (match === null) {

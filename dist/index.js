@@ -7488,7 +7488,7 @@ function Escape(text) {
     return text.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 }
 function MatchProvisioningProfile(text, name, type) {
-    const pattern = `^.*Profile ${Escape(type)}.*sign_${Escape(name)}.*$`;
+    const pattern = `^.*Profile ${Escape(type)}.*sigh_${Escape(name)}.*$`;
     const match = text.match(new RegExp(pattern, 'gm'));
     if (match === null) {
         throw new Error(`Not found provisioning profile. Match Pattern="${pattern}"`);

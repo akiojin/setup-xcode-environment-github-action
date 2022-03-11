@@ -18,10 +18,11 @@ function Escape(text: string)
 
 function MatchProvisioningProfile(text: string, name: string, type: string): string
 {
-	const match = text.match(new RegExp(`^.*Profile ${Escape(type)}.*sign_${Escape(name)}.*$`,'gm'))
+	const pattern = `^.*Profile ${Escape(type)}.*sign_${Escape(name)}.*$`
+	const match = text.match(new RegExp(pattern,'gm'))
 
 	if (match === null) {
-		throw new Error(`Not found provisioning profile. name=${name}, type=${type}`)
+		throw new Error(`Not found provisioning profile. Match Pattern="${pattern}"`)
 	}
 
 	return match.join('\n').split('|')[3].trim()

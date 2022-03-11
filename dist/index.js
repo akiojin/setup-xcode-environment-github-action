@@ -7528,6 +7528,9 @@ function Run() {
             core.setOutput('provisioning-profile', provisioningProfilePath);
             core.setOutput('provisioning-profile-uuid', provisioningProfileUUID);
             core.setOutput('provisioning-profile-name', provisioningProfileName);
+            core.info(`UUID: ${provisioningProfileUUID}`);
+            core.info(`Name: ${provisioningProfileName}`);
+            core.info(`Path: ${provisioningProfilePath}`);
             ProvisioningProfile.Set(provisioningProfilePath);
         }
         catch (ex) {

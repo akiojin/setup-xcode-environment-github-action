@@ -2,8 +2,6 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as os from 'os'
-import * as tmp from 'tmp'
-import * as fs from 'fs/promises';
 import { BooleanStateValue, StringStateValue } from './StateHelper'
 
 const IsMacOS = os.platform() === 'darwin'

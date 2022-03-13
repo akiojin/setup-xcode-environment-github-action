@@ -22,8 +22,6 @@
     "@actions/exec": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
-    "@types/tmp": "^0.2.3",
-    "tmp": "^0.2.1"
+    "@types/node": "^17.0.21"
   }
 }

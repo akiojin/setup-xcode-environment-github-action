@@ -4,7 +4,7 @@ inputs:
   type:
     description: >
       Define the profile type,
-      can be appstore, adhoc, development, enterprise, developer_id, mac_installer_distribution
+      can be appstore, adhoc, development, enterprise, developer_id, mac_installer_distribution.
     required: true
   app-identifier:
     description: >
@@ -12,11 +12,11 @@ inputs:
     required: true
   team-id:
     description: >
-      The ID of your Developer Portal team if you're in multiple teams
+      The ID of your Developer Portal team if you're in multiple teams.
     required: true
   git-url:
     description: >
-      URL to the git repo containing all the certificates
+      URL to the git repo containing all the certificates.
     required: true
   git-passphrase:
     description: >

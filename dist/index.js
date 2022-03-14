@@ -2957,6 +2957,7 @@ function Run() {
             process.env.FASTLANE_TEAM_ID = core.getInput('team-id');
             process.env.MATCH_GIT_URL = core.getInput('git-url');
             process.env.MATCH_PASSWORD = core.getInput('git-passphrase');
+            process.env.MATCH_GIT_BRANCH = core.getInput('git-branch');
             process.env.MATCH_KEYCHAIN_NAME = core.getInput('keychain');
             process.env.MATCH_KEYCHAIN_PASSWORD = core.getInput('keychain-password');
             process.env.MATCH_READONLY = 'true';

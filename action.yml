@@ -25,6 +25,11 @@ inputs:
       it will ask you for the passphrase for the Git repository.
       This is an additional layer of security: each of the files will be encrypted using openssl.
     required: true
+  git-branch:
+    description: >
+      Specific git branch to use.
+    required: false
+    default: 'master'
   keychain:
     description: >
       Path of the keychain to use. If omitted, the default login keychain is used.

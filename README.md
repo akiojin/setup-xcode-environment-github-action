@@ -25,12 +25,11 @@ brew install fastlane
 
 ### Simple usage
 ```yml
-- uses: akiojin/setup-xcode-environment-github-action@v1.0
-  id: setup-xcode-environment
+- uses: akiojin/setup-xcode-environment-github-action@v2
   with:
     type: 'development'
     app-identifier: com.exmple.App
-    team-id: <Team ID>
+    team-id: ABC0123456
     git-url: 'https://github.com/certificates'
     git-passphase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}
 ```
@@ -40,12 +39,12 @@ brew install fastlane
 - usas: setup-temporary-keychain-github-action@v1
   id: setup-temporary-keychain
 
-- uses: akiojin/setup-xcode-environment-github-action@v1.0
+- uses: akiojin/setup-xcode-environment-github-action@v2
   id: setup-xcode-environment
   with:
     type: 'enterprise'
     app-identifier: com.exmple.App
-    team-id: <Team ID>
+    team-id: ABC0123456
     git-url: 'https://github.com/certificates'
     git-passphase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}
     keychain: ${{ steps.setup-temporary-keychain.outputs.keychain }}
@@ -61,6 +60,7 @@ brew install fastlane
 |team_id|<c>true</c>|The ID of your Developer Portal team if you're in multiple teams.|
 |git-url|<c>true</c>|URL to the git repo containing all the certificates.|
 |git-passphrase|<c>true</c>|When running match for the first time on a new machine, it will ask you for the passphrase for the Git repository.<br>This is an additional layer of security: each of the files will be encrypted using openssl.|
+|git-branch|<c>false</c>|Specific git branch to use. Default is master|
 |keychain|<c>false</c>|Path of the keychain to use. If omitted, the default login keychain is used.|
 |keychain-password|<c>false</c>|Password for the keychain if specified in the keychain parameter;<br>default login keychain password if the kerchain parameter is omitted.|
 

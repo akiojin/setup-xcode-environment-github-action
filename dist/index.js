@@ -2969,7 +2969,7 @@ function Run() {
                     }
                 }
             };
-            core.startGroup('fastlane "match"');
+            core.startGroup('Run fastlane "match"');
             yield exec.exec('fastlane', ['match'], options);
             core.endGroup();
             const provisioningProfileUUID = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'UUID');

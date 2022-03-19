@@ -48,7 +48,7 @@ async function Run()
 			}
 		}
 
-		core.startGroup('fastlane "match"')
+		core.startGroup('Run fastlane "match"')
 		await exec.exec('fastlane', ['match'], options)
 		core.endGroup()
 

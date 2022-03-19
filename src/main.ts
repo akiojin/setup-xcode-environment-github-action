@@ -48,7 +48,9 @@ async function Run()
 			}
 		}
 
+		core.startGroup('fastlane "match"')
 		await exec.exec('fastlane', ['match'], options)
+		core.endGroup()
 
 		const provisioningProfileUUID = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'UUID')
 		const provisioningProfileName = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Name')

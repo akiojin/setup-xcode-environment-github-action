@@ -15,16 +15,27 @@ inputs:
     description: >
       The ID of your Developer Portal team if you're in multiple teams.
     required: true
+  p12-base64:
+    required: false
+    default: ''
+  p12-password:
+    required: false
+    default: ''
+  provisioning-profile-base64:
+    required: false
+    default: ''
   git-url:
     description: >
       URL to the git repo containing all the certificates.
-    required: true
+    required: false
+    default: ''
   git-passphrase:
     description: >
       When running match for the first time on a new machine,
       it will ask you for the passphrase for the Git repository.
       This is an additional layer of security: each of the files will be encrypted using openssl.
-    required: true
+    required: false
+    default: ''
   git-branch:
     description: >
       Specific git branch to use.

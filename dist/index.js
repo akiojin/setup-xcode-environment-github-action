@@ -9408,6 +9408,7 @@ function DoFastlane() {
 }
 function DoSelfSigning() {
     return __awaiter(this, void 0, void 0, function* () {
+        core.startGroup('Run Self signing');
         const provisioning = tmp.tmpNameSync();
         yield fs.writeFile(provisioning, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'));
         const installed = `${process.env.HOME}/Library/MobileDevice/Provisioning Profiles/${path.basename(provisioning)}.mobileprovision`;
@@ -9418,6 +9419,7 @@ function DoSelfSigning() {
         yield fs.writeFile(certificate, Buffer.from(core.getInput('p12-base64'), 'base64'));
         var keychain = yield keychain_1.KeychainFile.Open(core.getInput('keychain'), core.getInput('keychain-password'));
         yield keychain.ImportCertificateFromFile(certificate, core.getInput('p12-password'));
+        core.endGroup();
     });
 }
 function Run() {

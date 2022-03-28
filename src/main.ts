@@ -72,6 +72,8 @@ async function DoFastlane()
 
 async function DoSelfSigning()
 {
+	core.startGroup('Run Self signing')
+
 	const provisioning = tmp.tmpNameSync()
 	await fs.writeFile(provisioning, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'))
 
@@ -86,6 +88,8 @@ async function DoSelfSigning()
 
 	var keychain = await KeychainFile.Open(core.getInput('keychain'), core.getInput('keychain-password'))
 	await keychain.ImportCertificateFromFile(certificate, core.getInput('p12-password'))
+
+	core.endGroup()
 }
 
 async function Run()

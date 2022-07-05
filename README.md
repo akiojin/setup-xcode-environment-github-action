@@ -1,4 +1,5 @@
 # setup-xcode-environment-github-action
+
 This action installs the provisioning profile and certificate required to build Xcode.
 Provisioning profiles and certificates are installed automatically using [fastlane][1], so there is no need to set a Base64-ized file for the secret.
 Automatically installed provisioning profiles are uninstalled in post-processing.
@@ -6,21 +7,27 @@ Certificates are stored in the keychain configured by default, but a temporary k
 See [Usage temporary keychain](#usage-temporary-keychain) for instructions on using the temporary keychain.
 
 ## Requirement
+
 ### fastlane
+
 You will need to install [fastlane][1].
 Only Git repositories are supported for storing provisioning profiles and certificates.
 
 #### Installation
+
 ```sh
 brew install fastlane
 ```
 
 #### Configuration
+
 - Git repository for storing provisioning profiles and certificates
 - Provisioning profiles and certificates must have been previously stored in the above repositories by `fastlane match`.
 
 ## Usage
+
 ### Simple usage
+
 ```yml
 - uses: akiojin/setup-xcode-environment-github-action@v2
   with:
@@ -32,6 +39,7 @@ brew install fastlane
 ```
 
 ### Usage temporary keychain
+
 ```yml
 - usas: setup-temporary-keychain-github-action@v1
   id: setup-temporary-keychain
@@ -49,6 +57,7 @@ brew install fastlane
 ```
 
 ## Arguments
+
 |Name|Required|Type|Default|Description|
 |:--|:--|:--|:--|:--|
 |`type`|`true`|`string`||Define the profile type, can be `appstore`, `adhoc`, `development`, `enterprise`, `developer_id`, mac_installer_distribution.|
@@ -61,6 +70,7 @@ brew install fastlane
 |`keychain-password`|`false`|`string`|""|Password for the keychain if specified in the keychain parameter;<br>default login keychain password if the kerchain parameter is omitted.|
 
 ## License
+
 Any contributions made under this project will be governed by the [MIT License][3].
 
 [0]: https://github.com/akiojin/setup-xcode-environemt-github-action/actions/workflows/Test.yml/badge.svg

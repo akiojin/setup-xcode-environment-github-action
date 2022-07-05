@@ -11,7 +11,7 @@ env:
 jobs:
   Build:
     runs-on: macos-latest
-    timeout-minutes: ${{ env.TIMEOUT }}
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
   Test:
     runs-on: macos-latest
     needs: Build
-    timeout-minutes: ${{ env.TIMEOUT }}
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v2

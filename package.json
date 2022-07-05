@@ -19,7 +19,7 @@
   "homepage": "https://github.com/akiojin/xcode-bulid-github-action#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.1.0",
+    "@actions/exec": "^1.1.1",
     "typescript": "^4.6.3"
   },
   "devDependencies": {

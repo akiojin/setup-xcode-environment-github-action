@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/akiojin/xcode-bulid-github-action#readme",
   "dependencies": {
-    "@actions/core": "^1.9.0",
+    "@actions/core": "^1.9.1",
     "@actions/exec": "^1.1.1",
     "@akiojin/keychain": "^0.2.7",
     "@types/tmp": "^0.2.3",

@@ -5,13 +5,13 @@ import * as os from 'os'
 import * as tmp from 'tmp'
 import * as fs from 'fs/promises'
 import * as path from 'path'
-import { BooleanStateValue, StringStateValue } from './StateHelper'
+import { BooleanEnvironment, StringEnvironment } from './Environment'
 import { Keychain, KeychainFile } from '@akiojin/keychain'
 
 const IsMacOS = os.platform() === 'darwin'
 
-const PostProcess = new BooleanStateValue('IS_POST_PROCESS')
-const ProvisioningProfile = new StringStateValue('PROVISIONING_PROFILE')
+const PostProcess = new BooleanEnvironment('IS_POST_PROCESS')
+const ProvisioningProfile = new StringEnvironment('PROVISIONING_PROFILE')
 
 function Escape(text: string)
 {

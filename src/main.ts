@@ -1,14 +1,13 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
-import * as os from 'os'
 import * as tmp from 'tmp'
 import * as fs from 'fs/promises'
 import * as path from 'path'
 import { BooleanEnvironment, StringEnvironment } from './Environment'
 import { Keychain, KeychainFile } from '@akiojin/keychain'
 
-const IsMacOS = os.platform() === 'darwin'
+const IsMacOS = process.platform.toLowerCase() === 'darwin'
 
 const PostProcess = new BooleanEnvironment('IS_POST_PROCESS')
 const ProvisioningProfile = new StringEnvironment('PROVISIONING_PROFILE')
@@ -30,7 +29,7 @@ function MatchProvisioningProfile(text: string, name: string, type: string): str
   return match.join('\n').split('|')[3].trim()
 }
 
-async function DoFastlane()
+async function DoFastlaneSigning()
 {
   process.env.MATCH_APP_IDENTIFIER = core.getInput('app-identifier')
   process.env.MATCH_TYPE = core.getInput('type')
@@ -99,7 +98,7 @@ async function Run()
     if (!!core.getInput('p12-base64')) {
       await DoSelfSigning()
     } else {
-      await DoFastlane()
+      await DoFastlaneSigning()
     }
   } catch (ex: any) {
     core.setFailed(ex.message)

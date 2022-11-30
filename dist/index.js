@@ -10516,13 +10516,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2810));
 const exec = __importStar(__nccwpck_require__(7222));
 const io = __importStar(__nccwpck_require__(246));
-const os = __importStar(__nccwpck_require__(2037));
 const tmp = __importStar(__nccwpck_require__(4566));
 const fs = __importStar(__nccwpck_require__(3292));
 const path = __importStar(__nccwpck_require__(1017));
 const Environment_1 = __nccwpck_require__(6244);
 const keychain_1 = __nccwpck_require__(5526);
-const IsMacOS = os.platform() === 'darwin';
+const IsMacOS = process.platform.toLowerCase() === 'darwin';
 const PostProcess = new Environment_1.BooleanEnvironment('IS_POST_PROCESS');
 const ProvisioningProfile = new Environment_1.StringEnvironment('PROVISIONING_PROFILE');
 function Escape(text) {

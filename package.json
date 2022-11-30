@@ -1,5 +1,5 @@
 {
-  "name": "xcode-bulid-github-action",
+  "name": "setup-xocde-environment-github-action",
   "version": "2.0.7",
   "description": "",
   "main": "dist/index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akiojin/xcode-bulid-github-action.git"
+    "url": "git+https://github.com/akiojin/setup-xocde-environment-github-action.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/akiojin/xcode-bulid-github-action/issues"
+    "url": "https://github.com/akiojin/setup-xocde-environment-github-action/issues"
   },
-  "homepage": "https://github.com/akiojin/xcode-bulid-github-action#readme",
+  "homepage": "https://github.com/akiojin/setup-xocde-environment-github-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",

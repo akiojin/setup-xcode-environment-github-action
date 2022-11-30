@@ -15,6 +15,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           src: src/main.ts
+          branch: main
 
   Test:
     runs-on: macos-latest

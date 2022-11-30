@@ -1,17 +1,17 @@
 {
   "name": "setup-xocde-environment-github-action",
   "version": "2.0.7",
-  "description": "",
+  "description": "GitHub Actions to configure provisioning and other settings required when signing at build time",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akiojin/setup-xocde-environment-github-action.git"
+    "url": "https://github.com/akiojin/setup-xocde-environment-github-action.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "xcode",
+    "ios"
+  ],
+  "author": "Akio Jinsenji <akio-jinsenji@cloud-creative-studios.com> (https://github.com/akiojin)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/akiojin/setup-xocde-environment-github-action/issues"

@@ -40,7 +40,7 @@ inputs:
     description: >
       Specific git branch to use.
     required: false
-    default: 'master'
+    default: 'main'
   keychain:
     description: >
       Path of the keychain to use. If omitted, the default login keychain is used.

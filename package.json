@@ -1,6 +1,6 @@
 {
   "name": "@akiojin/setup-xocde-environment-github-action",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "GitHub Actions to configure provisioning and other settings required when signing at build time",
   "main": "dist/index.js",
   "repository": {

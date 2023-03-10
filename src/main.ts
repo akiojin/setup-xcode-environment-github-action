@@ -32,7 +32,7 @@ function MatchProvisioningProfile(text: string, name: string, type: string): str
 async function DoFastlaneSigning()
 {
   process.env.MATCH_APP_IDENTIFIER = core.getInput('app-identifier')
-  process.env.MATCH_TYPE = core.getInput('type')
+  process.env.MATCH_TYPE = core.getInput('type').toLowerCase()
   process.env.FASTLANE_TEAM_ID = core.getInput('team-id')
   process.env.MATCH_GIT_URL = core.getInput('git-url')
   process.env.MATCH_PASSWORD = core.getInput('git-passphrase')

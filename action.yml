@@ -1,6 +1,5 @@
-name: 'setup-xcode-environment-github-action'
-description: 'This action installs the provisioning profile and certificate required to build Xcode.
-'
+name: 'Xcode environment setup'
+description: 'This action installs the provisioning profile and certificate required to build Xcode.'
 inputs:
   type:
     description: >

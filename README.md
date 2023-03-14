@@ -2,7 +2,8 @@
 
 This action installs the provisioning profile and certificate required to build Xcode.
 Provisioning profiles and certificates are installed automatically using [fastlane][1], so there is no need to set a Base64-ized file for the secret.
-Automatically installed provisioning profiles are uninstalled in post-processing.
+This action does not automatically remove installed provisioning profiles and certificates.
+If you do not want to keep the provisioning profile and certificates, use a temporary keychain instead of the default keychain.
 Certificates are stored in the keychain configured by default, but a temporary keychain can also be used.
 See [Usage temporary keychain](#usage-temporary-keychain) for instructions on using the temporary keychain.
 

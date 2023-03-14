@@ -4,13 +4,9 @@ import * as io from '@actions/io'
 import * as tmp from 'tmp'
 import * as fs from 'fs/promises'
 import * as path from 'path'
-import { BooleanEnvironment, StringEnvironment } from './Environment'
 import { Keychain, KeychainFile } from '@akiojin/keychain'
 
 const IsMacOS = process.platform.toLowerCase() === 'darwin'
-
-const PostProcess = new BooleanEnvironment('IS_POST_PROCESS')
-const ProvisioningProfile = new StringEnvironment('PROVISIONING_PROFILE')
 
 function Escape(text: string)
 {
@@ -66,8 +62,6 @@ async function DoFastlaneSigning()
   core.info(`UUID: ${UUID}`)
   core.info(`Name: ${name}`)
   core.info(`Path: ${path}`)
-
-  ProvisioningProfile.Set(path)
 }
 
 async function DoSelfSigning()
@@ -81,7 +75,6 @@ async function DoSelfSigning()
   await io.mv(provisioning, installed)
 
   core.setOutput('provisioning-profile', installed)
-  ProvisioningProfile.Set(installed)
 
   const certificate = tmp.tmpNameSync() + '.p12'
   await fs.writeFile(certificate, Buffer.from(core.getInput('p12-base64'), 'base64'))
@@ -105,24 +98,8 @@ async function Run()
   }
 }
 
-async function Cleanup()
-{
-  try {
-    core.info('Remove provisioning profile')
-    await io.rmRF(ProvisioningProfile.Get())
-  } catch (ex: any) {
-    core.setFailed(ex.message)
-  }
-}
-
 if (!IsMacOS) {
   core.setFailed('Action requires macOS agent.')
 } else {
-  if (!!PostProcess.Get()) {
-    Cleanup()
-  } else {
-    Run()
-  }
-  
-  PostProcess.Set(true)
+  Run()
 }

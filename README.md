@@ -1,5 +1,7 @@
 # setup-xcode-environment-github-action
 
+![BuildAndTest][0]
+
 This action installs the provisioning profile and certificate required to build Xcode.
 Provisioning profiles and certificates are installed automatically using [fastlane][1], so there is no need to set a Base64-ized file for the secret.
 This action does not automatically remove installed provisioning profiles and certificates.
@@ -74,7 +76,7 @@ brew install fastlane
 
 Any contributions made under this project will be governed by the [MIT License][3].
 
-[0]: https://github.com/akiojin/setup-xcode-environemt-github-action/actions/workflows/Test.yml/badge.svg
+[0]: https://github.com/akiojin/setup-xcode-environemt-github-action/actions/workflows/Build.yml/badge.svg
 [1]: https://docs.fastlane.tools/
 [2]: https://github.com/akiojin/setup-xcode-environemt-github-action/blob/main/action.yml
 [3]: https://github.com/akiojin/setup-xcode-environemt-github-action/blob/main/LICENSE

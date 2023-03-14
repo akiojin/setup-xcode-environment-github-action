@@ -20,7 +20,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
-    "@akiojin/keychain": "^0.2.7",
+    "@akiojin/keychain": "^1.0.0",
     "@types/tmp": "^0.2.3",
     "tmp": "^0.2.1",
     "typescript": "^4.9.5"

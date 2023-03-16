@@ -23,7 +23,7 @@
     "@akiojin/keychain": "^1.0.0",
     "@types/tmp": "^0.2.3",
     "tmp": "^0.2.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.14.6"

@@ -4,7 +4,7 @@
   "description": "GitHub Actions to configure provisioning and other settings required when signing at build time",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm install && ncc build src/main.ts -o dist --license licenses.txt",
+    "build": "npm install && ncc build src/main.ts --license licenses.txt",
     "clean": "rimraf dist && rimraf node_modules && npm cache clean --force"
   },
   "repository": {

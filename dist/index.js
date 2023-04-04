@@ -10495,6 +10495,9 @@ async function DoFastlaneSigning() {
     core.setOutput('provisioning-profile', path);
     core.setOutput('provisioning-profile-uuid', UUID);
     core.setOutput('provisioning-profile-name', name);
+    core.exportVariable('PROVISIONING_PROFILE', path);
+    core.exportVariable('PROVISIONING_PROFILE_UUID', UUID);
+    core.exportVariable('PROVISIONING_PROFILE_NAME', name);
     core.info(`UUID: ${UUID}`);
     core.info(`Name: ${name}`);
     core.info(`Path: ${path}`);

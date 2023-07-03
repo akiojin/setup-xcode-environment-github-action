@@ -68,7 +68,7 @@ brew install fastlane
 |`team_id`|`true`|`string`||The ID of your Developer Portal team if you're in multiple teams.|
 |`git-url`|`true`|`string`||URL to the git repo containing all the certificates.|
 |`git-passphrase`|`true`|`string`||When running match for the first time on a new machine, it will ask you for the passphrase for the Git repository.<br>This is an additional layer of security: each of the files will be encrypted using openssl.|
-|`git-branch`|`false`|`string`|`master`|Specific git branch to use.|
+|`git-branch`|`false`|`string`|`main`|Specific git branch to use.|
 |`keychain`|`false`|`string`|""|Path of the keychain to use. If omitted, the default login keychain is used.|
 |`keychain-password`|`false`|`string`|""|Password for the keychain if specified in the keychain parameter;<br>default login keychain password if the kerchain parameter is omitted.|
 

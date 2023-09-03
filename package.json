@@ -29,7 +29,7 @@
     "@actions/exec": "1.1.1",
     "@akiojin/keychain": "1.0.0",
     "@commitlint/cli": "17.7.1",
-    "@commitlint/config-conventional": "17.6.7",
+    "@commitlint/config-conventional": "17.7.0",
     "@types/node": "20.5.7",
     "@types/tmp": "0.2.3",
     "@vercel/ncc": "0.36.1",

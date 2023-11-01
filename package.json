@@ -28,7 +28,7 @@
     "@actions/core": "1.10.1",
     "@actions/exec": "1.1.1",
     "@akiojin/keychain": "1.0.0",
-    "@commitlint/cli": "17.7.2",
+    "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "17.7.0",
     "@types/node": "20.5.7",
     "@types/tmp": "0.2.5",

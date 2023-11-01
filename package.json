@@ -30,7 +30,7 @@
     "@akiojin/keychain": "1.0.0",
     "@commitlint/cli": "17.7.2",
     "@commitlint/config-conventional": "17.7.0",
-    "@types/node": "20.5.7",
+    "@types/node": "20.8.10",
     "@types/tmp": "0.2.5",
     "@vercel/ncc": "0.36.1",
     "husky": "8.0.3",

@@ -27,14 +27,14 @@ function MatchProvisioningProfile(text: string, name: string, type: string): str
 
 function MatchCertificate(text: string): string
 {
-  const pattern = `.*\|(?<param>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`
-  const match = text.match(new RegExp(pattern, 'gm'))
+  const pattern = `.*\|(?<name>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`
+  const match = text.match(new RegExp(pattern, 'm'))
 
-  if (!match || !match.groups) {
+  if (match === null) {
     throw new Error(`Not found Certificate. Match Pattern="${pattern}"`)
   }
 
-  return match.groups.value.trim()
+  return match.groups?.value.trim()!
 }
 
 async function DoFastlaneSigning()

@@ -10468,12 +10468,12 @@ function MatchProvisioningProfile(text, name, type) {
     return match.join('\n').split('|')[3].trim();
 }
 function MatchCertificate(text) {
-    const pattern = `.*\|(?<param>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`;
-    const match = text.match(new RegExp(pattern, 'gm'));
-    if (!match || !match.groups) {
+    const pattern = `.*\|(?<name>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`;
+    const match = text.match(new RegExp(pattern, 'm'));
+    if (match === null) {
         throw new Error(`Not found Certificate. Match Pattern="${pattern}"`);
     }
-    return match.groups.value.trim();
+    return match.groups?.value.trim();
 }
 async function DoFastlaneSigning() {
     const keychain = core.getInput('keychain') ? core.getInput('keychain') : keychain_1.Keychain.GetDefaultLoginKeychainPath();

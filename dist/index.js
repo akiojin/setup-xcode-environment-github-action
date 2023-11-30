@@ -558,7 +558,7 @@ class OidcClient {
                 .catch(error => {
                 throw new Error(`Failed to get ID Token. \n 
         Error Code : ${error.statusCode}\n 
-        Error Message: ${error.result.message}`);
+        Error Message: ${error.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
             if (!id_token) {
@@ -10467,6 +10467,14 @@ function MatchProvisioningProfile(text, name, type) {
     }
     return match.join('\n').split('|')[3].trim();
 }
+function MatchCertificate(text) {
+    const pattern = `.*\|(?<param>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`;
+    const match = text.match(new RegExp(pattern, 'gm'));
+    if (!match || !match.groups) {
+        throw new Error(`Not found Certificate. Match Pattern="${pattern}"`);
+    }
+    return match.groups.value.trim();
+}
 async function DoFastlaneSigning() {
     const keychain = core.getInput('keychain') ? core.getInput('keychain') : keychain_1.Keychain.GetDefaultLoginKeychainPath();
     keychain_1.Keychain.UnlockKeychain(keychain, core.getInput('keychain-password'));
@@ -10489,19 +10497,31 @@ async function DoFastlaneSigning() {
     };
     core.startGroup('Run fastlane "match"');
     await exec.exec('fastlane', ['match'], options);
+    const APPLE_PROV_PROFILE_UUID = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'UUID');
+    const APPLE_PROV_PROFILE_NAME = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Name');
+    const APPLE_PROV_PROFILE_PATH = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Path');
+    const APPLE_CERTIFICATE_SIGNING_IDENTITY = MatchCertificate(output);
+    // Old
+    core.setOutput('provisioning-profile', APPLE_PROV_PROFILE_PATH);
+    core.setOutput('provisioning-profile-uuid', APPLE_PROV_PROFILE_UUID);
+    core.setOutput('provisioning-profile-name', APPLE_PROV_PROFILE_NAME);
+    core.exportVariable('PROVISIONING_PROFILE', APPLE_PROV_PROFILE_PATH);
+    core.exportVariable('PROVISIONING_PROFILE_UUID', APPLE_PROV_PROFILE_UUID);
+    core.exportVariable('PROVISIONING_PROFILE_NAME', APPLE_PROV_PROFILE_NAME);
+    // New
+    core.setOutput('apple-prov-profile', APPLE_PROV_PROFILE_PATH);
+    core.setOutput('apple-prov-profile-uuid', APPLE_PROV_PROFILE_UUID);
+    core.setOutput('apple-prov-profile-name', APPLE_PROV_PROFILE_NAME);
+    core.setOutput('apple-certificate-signing-identity', APPLE_CERTIFICATE_SIGNING_IDENTITY);
+    core.exportVariable('APPLE_PROV_PROFILE', APPLE_PROV_PROFILE_PATH);
+    core.exportVariable('APPLE_PROV_PROFILE_UUID', APPLE_PROV_PROFILE_UUID);
+    core.exportVariable('APPLE_PROV_PROFILE_NAME', APPLE_PROV_PROFILE_NAME);
+    core.exportVariable('APPLE_CERTIFICATE_SIGNING_IDENTITY', APPLE_CERTIFICATE_SIGNING_IDENTITY);
+    core.info(`Provisioning Profile UUID: ${APPLE_PROV_PROFILE_UUID}`);
+    core.info(`Provisioning Profile Name: ${APPLE_PROV_PROFILE_NAME}`);
+    core.info(`Provisioning Profile Path: ${APPLE_PROV_PROFILE_PATH}`);
+    core.info(`Certificate Name: ${APPLE_CERTIFICATE_SIGNING_IDENTITY}`);
     core.endGroup();
-    const UUID = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'UUID');
-    const name = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Name');
-    const path = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Path');
-    core.setOutput('provisioning-profile', path);
-    core.setOutput('provisioning-profile-uuid', UUID);
-    core.setOutput('provisioning-profile-name', name);
-    core.exportVariable('PROVISIONING_PROFILE', path);
-    core.exportVariable('PROVISIONING_PROFILE_UUID', UUID);
-    core.exportVariable('PROVISIONING_PROFILE_NAME', name);
-    core.info(`UUID: ${UUID}`);
-    core.info(`Name: ${name}`);
-    core.info(`Path: ${path}`);
 }
 async function DoSelfSigning() {
     core.startGroup('Run Self signing');

@@ -16,7 +16,7 @@ function Escape(text: string)
 function MatchProvisioningProfile(text: string, name: string, type: string): string
 {
   const pattern = `^.*Profile ${Escape(type)}.*sigh_${Escape(name)}.*$`
-  const match = text.match(new RegExp(pattern, 'gm'))
+  const match = text.match(new RegExp(pattern, 'm'))
 
   if (match === null) {
     throw new Error('Not found provisioning profile.')
@@ -27,8 +27,8 @@ function MatchProvisioningProfile(text: string, name: string, type: string): str
 
 function MatchCertificate(text: string): string
 {
-  const pattern = `^.*Certificate Name.*\|.*\|$`
-  const match = text.match(new RegExp(pattern, 'gm'))
+  const pattern = `^.*Certificate Name.*$`
+  const match = text.match(new RegExp(pattern, 'm'))
 
   if (match === null) {
     throw new Error('Not found Certificate.')
@@ -64,6 +64,7 @@ async function DoFastlaneSigning()
 
   core.startGroup('Run fastlane "match"')
   await exec.exec('fastlane', ['match'], options)
+  core.endGroup()
 
   const APPLE_PROV_PROFILE_UUID = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'UUID')
   const APPLE_PROV_PROFILE_NAME = MatchProvisioningProfile(output, process.env.MATCH_APP_IDENTIFIER, 'Name')
@@ -94,8 +95,6 @@ async function DoFastlaneSigning()
   core.info(`Provisioning Profile Name: ${APPLE_PROV_PROFILE_NAME}`)
   core.info(`Provisioning Profile Path: ${APPLE_PROV_PROFILE_PATH}`)
   core.info(`Certificate Name: ${APPLE_CERTIFICATE_SIGNING_IDENTITY}`)
-
-  core.endGroup()
 }
 
 async function DoSelfSigning()

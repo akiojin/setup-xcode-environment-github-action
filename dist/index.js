@@ -10463,17 +10463,17 @@ function MatchProvisioningProfile(text, name, type) {
     const pattern = `^.*Profile ${Escape(type)}.*sigh_${Escape(name)}.*$`;
     const match = text.match(new RegExp(pattern, 'gm'));
     if (match === null) {
-        throw new Error(`Not found provisioning profile. Match Pattern="${pattern}"`);
+        throw new Error('Not found provisioning profile.');
     }
     return match.join('\n').split('|')[3].trim();
 }
 function MatchCertificate(text) {
-    const pattern = `.*\|(?<name>.*Certificate Name.*)\|(?<env>.*)\|(?<value>.*)\|.*$`;
+    const pattern = `^.*Certificate Name.*\|(?<value>.*)\|$`;
     const match = text.match(new RegExp(pattern, 'm'));
-    if (match === null) {
-        throw new Error(`Not found Certificate. Match Pattern="${pattern}"`);
+    if (match === null || !match.groups || !match.groups.value) {
+        throw new Error('Not found Certificate.');
     }
-    return match.groups?.value.trim();
+    return match.groups.value.trim();
 }
 async function DoFastlaneSigning() {
     const keychain = core.getInput('keychain') ? core.getInput('keychain') : keychain_1.Keychain.GetDefaultLoginKeychainPath();

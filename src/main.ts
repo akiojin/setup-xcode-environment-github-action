@@ -3,13 +3,12 @@ import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as tmp from 'tmp'
 import * as fs from 'fs/promises'
-import * as path from 'path'
 import { Keychain, KeychainFile } from '@akiojin/keychain'
+import { ArgumentBuilder } from '@akiojin/argument-builder'
 
 const IsMacOS = process.platform.toLowerCase() === 'darwin'
 
-function Escape(text: string)
-{
+function Escape(text: string) {
   return text.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&')
 }
 
@@ -97,17 +96,82 @@ async function DoFastlaneSigning()
   core.info(`Certificate Name: ${APPLE_CERTIFICATE_SIGNING_IDENTITY}`)
 }
 
+async function CreateDecodeProvisioningProfile(filename: string): Promise<string>
+{
+  const builder = new ArgumentBuilder()
+    .Append('cmd')
+    .Append('-D')
+    .Append('-i', filename)
+
+  let decoded = ''
+  const options: exec.ExecOptions = {
+    listeners: {
+      stdout: (data: Buffer) => {
+        decoded += data.toString()
+      }
+    }
+  }
+
+  await exec.exec('security', builder.Build(), options)
+
+  const provisioning = tmp.tmpNameSync()
+  await fs.writeFile(provisioning, decoded)
+
+  return provisioning
+}
+
+async function GetProvisioningProfileParam(provisioning: string, name: string): Promise<string>
+{
+  const builder = new ArgumentBuilder()
+    .Append('-c')
+    .Append(`Print :${name}`)
+    .Append(provisioning)
+
+    let result = ''
+    const options: exec.ExecOptions = {
+    listeners: {
+      stdout: (data: Buffer) => {
+        result += data.toString()
+      }
+    }
+  }
+
+  await exec.exec('/usr/libexec/PlistBuddy', builder.Build(), options)
+
+  return result;
+}
+
+async function GetUUID(filename: string): Promise<string>
+{
+  return await GetProvisioningProfileParam(filename, 'UUID')
+}
+
+async function GetName(filename: string): Promise<string>
+{
+  return await GetProvisioningProfileParam(filename, 'Name')
+}
+
 async function DoSelfSigning()
 {
   core.startGroup('Run Self signing')
 
-  const provisioning = tmp.tmpNameSync()
-  await fs.writeFile(provisioning, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'))
+  const original = tmp.tmpNameSync()
+  await fs.writeFile(original, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'))
+  const provisioning = await CreateDecodeProvisioningProfile(original)
 
-  const installed = `${process.env.HOME}/Library/MobileDevice/Provisioning Profiles/${path.basename(provisioning)}.mobileprovision`
-  await io.mv(provisioning, installed)
+  const APPLE_PROV_PROFILE_UUID = await GetUUID(provisioning)
+  const APPLE_PROV_PROFILE_NAME = await GetName(provisioning)
 
-  core.setOutput('provisioning-profile', installed)
+  const installed = `${process.env.HOME}/Library/MobileDevice/Provisioning Profiles/${APPLE_PROV_PROFILE_UUID}.provision`
+  await io.mv(original, installed)
+
+  core.setOutput('apple-prov-profile', installed)
+  core.setOutput('apple-prov-profile-uuid', APPLE_PROV_PROFILE_UUID)
+  core.setOutput('apple-prov-profile-name', APPLE_PROV_PROFILE_NAME)
+
+  core.exportVariable('APPLE_PROV_PROFILE', installed)
+  core.exportVariable('APPLE_PROV_PROFILE_UUID', APPLE_PROV_PROFILE_UUID)
+  core.exportVariable('APPLE_PROV_PROFILE_NAME', APPLE_PROV_PROFILE_NAME)
 
   const certificate = tmp.tmpNameSync() + '.p12'
   await fs.writeFile(certificate, Buffer.from(core.getInput('p12-base64'), 'base64'))
@@ -121,7 +185,7 @@ async function DoSelfSigning()
 async function Run()
 {
   try {
-    if (!!core.getInput('p12-base64')) {
+    if (core.getInput('p12-base64')) {
       await DoSelfSigning()
     } else {
       await DoFastlaneSigning()

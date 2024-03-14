@@ -3029,6 +3029,127 @@ function copyFile(srcFile, destFile, force) {
 
 /***/ }),
 
+/***/ 782:
+/***/ ((module) => {
+
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 356:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _ArgumentBuilder_args;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class ArgumentBuilder {
+    constructor() {
+        _ArgumentBuilder_args.set(this, []);
+    }
+    Append(arg, param) {
+        if (Array.isArray(arg)) {
+            __classPrivateFieldSet(this, _ArgumentBuilder_args, __classPrivateFieldGet(this, _ArgumentBuilder_args, "f").concat(arg), "f");
+        }
+        else {
+            __classPrivateFieldGet(this, _ArgumentBuilder_args, "f").push(arg);
+            if (param != null) {
+                __classPrivateFieldGet(this, _ArgumentBuilder_args, "f").push(param);
+            }
+        }
+        return this;
+    }
+    Count() {
+        return __classPrivateFieldGet(this, _ArgumentBuilder_args, "f").length;
+    }
+    Build() {
+        return __classPrivateFieldGet(this, _ArgumentBuilder_args, "f");
+    }
+    ToString() {
+        return __classPrivateFieldGet(this, _ArgumentBuilder_args, "f").join(' ');
+    }
+}
+exports["default"] = ArgumentBuilder;
+_ArgumentBuilder_args = new WeakMap();
+
+
+/***/ }),
+
+/***/ 925:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require2_) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ArgumentBuilder = void 0;
+var ArgumentBuilder_1 = __nccwpck_require2_(356);
+Object.defineProperty(exports, "ArgumentBuilder", ({ enumerable: true, get: function () { return __importDefault(ArgumentBuilder_1).default; } }));
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __nccwpck_require2_(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require2_);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
+/******/ 		}
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	if (typeof __nccwpck_require2_ !== 'undefined') __nccwpck_require2_.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require2_(925);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
+/******/ })()
+;
+
+/***/ }),
+
 /***/ 442:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -6692,8 +6813,8 @@ const exec = __importStar(__nccwpck_require__(514));
 const io = __importStar(__nccwpck_require__(436));
 const tmp = __importStar(__nccwpck_require__(517));
 const fs = __importStar(__nccwpck_require__(292));
-const path = __importStar(__nccwpck_require__(17));
 const keychain_1 = __nccwpck_require__(442);
+const argument_builder_1 = __nccwpck_require__(782);
 const IsMacOS = process.platform.toLowerCase() === 'darwin';
 function Escape(text) {
     return text.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
@@ -6762,13 +6883,61 @@ async function DoFastlaneSigning() {
     core.info(`Provisioning Profile Path: ${APPLE_PROV_PROFILE_PATH}`);
     core.info(`Certificate Name: ${APPLE_CERTIFICATE_SIGNING_IDENTITY}`);
 }
+async function CreateDecodeProvisioningProfile(filename) {
+    const builder = new argument_builder_1.ArgumentBuilder()
+        .Append('cmd')
+        .Append('-D')
+        .Append('-i', filename);
+    let decoded = '';
+    const options = {
+        listeners: {
+            stdout: (data) => {
+                decoded += data.toString();
+            }
+        }
+    };
+    await exec.exec('security', builder.Build(), options);
+    const provisioning = tmp.tmpNameSync();
+    await fs.writeFile(provisioning, decoded);
+    return provisioning;
+}
+async function GetProvisioningProfileParam(provisioning, name) {
+    const builder = new argument_builder_1.ArgumentBuilder()
+        .Append('-c')
+        .Append(`Print :${name}`)
+        .Append(provisioning);
+    let result = '';
+    const options = {
+        listeners: {
+            stdout: (data) => {
+                result += data.toString();
+            }
+        }
+    };
+    await exec.exec('/usr/libexec/PlistBuddy', builder.Build(), options);
+    return result;
+}
+async function GetUUID(filename) {
+    return await GetProvisioningProfileParam(filename, 'UUID');
+}
+async function GetName(filename) {
+    return await GetProvisioningProfileParam(filename, 'Name');
+}
 async function DoSelfSigning() {
     core.startGroup('Run Self signing');
-    const provisioning = tmp.tmpNameSync();
-    await fs.writeFile(provisioning, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'));
-    const installed = `${process.env.HOME}/Library/MobileDevice/Provisioning Profiles/${path.basename(provisioning)}.mobileprovision`;
-    await io.mv(provisioning, installed);
-    core.setOutput('provisioning-profile', installed);
+    const original = tmp.tmpNameSync();
+    await fs.writeFile(original, Buffer.from(core.getInput('provisioning-profile-base64'), 'base64'));
+    const provisioning = await CreateDecodeProvisioningProfile(original);
+    const APPLE_PROV_PROFILE_UUID = await GetUUID(provisioning);
+    const APPLE_PROV_PROFILE_NAME = await GetName(provisioning);
+    const installed = `${process.env.HOME}/Library/MobileDevice/Provisioning Profiles/${APPLE_PROV_PROFILE_UUID}.provision`;
+    await io.mv(original, installed);
+    core.setOutput('apple-prov-profile', installed);
+    core.setOutput('apple-prov-profile-uuid', APPLE_PROV_PROFILE_UUID);
+    core.setOutput('apple-prov-profile-name', APPLE_PROV_PROFILE_NAME);
+    core.exportVariable('APPLE_PROV_PROFILE', installed);
+    core.exportVariable('APPLE_PROV_PROFILE_UUID', APPLE_PROV_PROFILE_UUID);
+    core.exportVariable('APPLE_PROV_PROFILE_NAME', APPLE_PROV_PROFILE_NAME);
     const certificate = tmp.tmpNameSync() + '.p12';
     await fs.writeFile(certificate, Buffer.from(core.getInput('p12-base64'), 'base64'));
     var keychain = await keychain_1.KeychainFile.Open(core.getInput('keychain'), core.getInput('keychain-password'));
@@ -6777,7 +6946,7 @@ async function DoSelfSigning() {
 }
 async function Run() {
     try {
-        if (!!core.getInput('p12-base64')) {
+        if (core.getInput('p12-base64')) {
             await DoSelfSigning();
         }
         else {

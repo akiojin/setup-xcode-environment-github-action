@@ -1,16 +1,24 @@
 #!/bin/bash
 
 if [ "$#" -ne 1 ] || [[ "$1" != "major" && "$1" != "minor" && "$1" != "patch" && "$1" != "prerelease" ]]; then
-  echo "Usage: ./publish.sh <major/minor/patch/prerelease>"
+  echo "Usage:"
+  echo " ./publis.sh <major/minor/patch/prerelease>"
+  echo "  or"
+  echo " npm run release <major/minor/patch>"
+  echo "  or"
+  echo " npm run pre-release"
   exit 1
 fi
 
-if [ -z "${GITHUB_TOKEN:-}" ]; then
-  echo "Error: Environment variable GITHUB_TOKEN is not set."
+echo -n "Do you want to continue the update process? (Y/N): "
+read -n 1 ANSWER
+echo ""
+
+if [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]; then
+  echo "Update process canceled."
   exit 1
 fi
 
-git pull
 npm run clean
 npm run build
 
@@ -39,12 +47,11 @@ else
   VERSION=$(npm version prerelease --preid rc)
 fi
 
+git pull
 git add package.json package-lock.json
 git commit -m "bump: $VERSION"
 git push --follow-tags
 
-git switch main
-git merge develop --no-ff --no-edit
-git push --follow-tags
-
-git switch develop
+if [ "$1" != "prerelease" ]; then
+  gh pr create --base main --head develop --title "bump: $VERSION" --body "bump: $VERSION"
+fi

@@ -72,6 +72,24 @@ brew install fastlane
 | `keychain`          | `false`  | `string` | ""      | Path of the keychain to use. If omitted, the default login keychain is used.                                                                                                                                      |
 | `keychain-password` | `false`  | `string` | ""      | Password for the keychain if specified in the keychain parameter;<br>default login keychain password if the kerchain parameter is omitted.                                                                        |
 
+## Environment
+
+If this action succeeds, the following parameters will be set to values.
+
+|      Environment variable name       |         Description          |
+| ------------------------------------ | ---------------------------- |
+| `APPLE_PROV_PROFILE`                 | Provisioning profile path    |
+| `APPLE_PROV_PROFILE_UUID`            | UUID of provisioning profile |
+| `APPLE_PROV_PROFILE_NAME`            | Provisioning profile name    |
+| `APPLE_CERTIFICATE_SIGNING_IDENTITY` | credentials                  |
+
+|Output paramater name| Description|
+|---|---|
+| `apple-prov-profile`                 | Provisioning profile path    |
+| `apple-prov-profile-uuid`            | UUID of provisioning profile |
+| `apple-prov-profile-name`            | Provisioning profile name    |
+| `apple-certificate-signing-identity` | credentials                  |
+
 ## License
 
 Any contributions made under this project will be governed by the [MIT License][3].

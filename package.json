@@ -33,7 +33,7 @@
     "@types/node": "22.8.6",
     "@types/tmp": "0.2.6",
     "@vercel/ncc": "0.38.2",
-    "husky": "9.1.5",
+    "husky": "9.1.7",
     "rimraf": "5.0.7",
     "typescript": "5.5.4"
   },

@@ -1,14 +1,13 @@
-name: Auto Review
+name: Review PRs
 
 on:
   pull_request:
-    branches-ignore:
-      - main
     types:
       - opened
+      - synchronize
 
 jobs:
-  AutoReview:
+  Review:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -16,13 +15,11 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: 🔄 Checkout to the branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🤖 Auto Review
-        uses: akiojin/auto-review-github-action@v2
+      - uses: akiojin/auto-review-github-action@v2
         continue-on-error: true
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          target: 'ts,yml,md'
+          target: 'ts,yml'
           language: 日本語

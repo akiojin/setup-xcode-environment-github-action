@@ -99,7 +99,7 @@ async function DoFastlaneSigning()
 async function CreateDecodeProvisioningProfile(filename: string): Promise<string>
 {
   const builder = new ArgumentBuilder()
-    .Append('cmd')
+    .Append('cms')
     .Append('-D')
     .Append('-i', filename)
 

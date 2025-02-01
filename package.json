@@ -27,7 +27,7 @@
   "devDependencies": {
     "@actions/core": "1.11.1",
     "@actions/exec": "1.1.1",
-    "@akiojin/keychain": "1.0.0",
+    "@akiojin/keychain": "1.0.1",
     "@types/node": "22.10.5",
     "@types/tmp": "0.2.6",
     "@vercel/ncc": "0.38.3",
